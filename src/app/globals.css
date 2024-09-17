@@ -1,6 +1,15 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+*{
+  color: #29292A;
+}
+
+.title{
+  font-family: var(--font-merri)
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -57,11 +66,24 @@
   }
 }
 @layer base {
-  * {
-    @apply border-border;
+  .remove-scrollbar::-webkit-scrollbar {
+    width: 0px;
+    height: 0px;
+    border-radius: 0px;
   }
-  body {
-    @apply bg-background text-foreground;
+
+  .remove-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .remove-scrollbar::-webkit-scrollbar-thumb {
+    background: transparent;
+    border-radius: 0px;
+  }
+
+  .remove-scrollbar::-webkit-scrollbar-thumb:hover {
+    /* background: #1e2238; */
+    background: transparent;
   }
 }
 

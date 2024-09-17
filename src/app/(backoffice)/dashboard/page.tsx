@@ -5,7 +5,7 @@ import React from 'react'
 const Dashboard = () => {
   return (
     <div>
-        <h1 className={cn("text-2xl font-semibold")}>Consultórios Dentários</h1>
+        <h1 className={cn("h1-semi-bold")}>Consultórios Dentários</h1>
         <div className={cn("mt-4 w-full flex justify-end")}>
             <Link
                 href="/new-office"

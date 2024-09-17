@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Roboto, Merriweather } from 'next/font/google'
 import "./globals.css";
+import { Toaster } from "@/components/ui/toaster";
 
 const roboto = Roboto({
   subsets: ["latin"],
@@ -28,7 +29,8 @@ export default function RootLayout({
       <body
         className={`${roboto.variable} ${merri.variable} antialiased`}
       >
-        {children}
+        <main>{children}</main>
+        <Toaster />
       </body>
     </html>
   );

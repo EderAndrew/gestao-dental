@@ -12,7 +12,7 @@ const HeaderAdmin = () => {
               <Link href="/dashboard" className={cn("text-white")}>Home</Link>
             </li>
             <li>
-              <Link href="/dashboard" className={cn("text-white")}>Usuários</Link>
+              <Link href="/new-admin-user" className={cn("text-white")}>Usuários</Link>
             </li>
           </ul>
       </div>

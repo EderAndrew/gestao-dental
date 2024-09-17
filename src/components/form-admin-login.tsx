@@ -64,7 +64,7 @@ const FormAdminLogin = () => {
                         </FormItem>
                     )}
                 />
-            <Button type="submit" className="w-full bg-slate-800 text-white">Deploy</Button>
+            <Button type="submit" className="w-full bg-slate-800 text-white">Acessar</Button>
             </form>
         </Form>
         

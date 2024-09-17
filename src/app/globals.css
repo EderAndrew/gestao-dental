@@ -87,3 +87,8 @@
   }
 }
 
+@layer utilities {
+  .h1-semi-bold {
+    @apply text-2xl font-semibold;
+  }
+}

@@ -16,7 +16,7 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
-import { Form, FormControl, FormField, FormItem, FormLabel } from "./ui/form"
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "./ui/form"
 import { formSchemaLogin } from "@/schemas/formschemaLogin"
 import { formSchemaRegister } from "@/schemas/formSchemaRegister"
 
@@ -71,6 +71,7 @@ const FormLogin = () => {
                                 <FormControl>
                                     <Input type="email" placeholder="email@example.com.br" {...field} />
                                 </FormControl>
+                                <FormMessage className="text-red-500"/>
                             </FormItem>
                         )}
                     />
@@ -83,10 +84,11 @@ const FormLogin = () => {
                                 <FormControl>
                                     <Input type="password" placeholder="123456" {...field} />
                                 </FormControl>
+                                <FormMessage className="text-red-500"/>
                             </FormItem>
                         )}
                     />
-                    <Button className="w-full bg-[#0597F2] text-lg text-white">Acessar</Button>
+                    <Button className="w-full bg-[#0597F2] text-lg text-white" type="submit">Acessar</Button>
                 </form>
             </Form>
           </CardContent>
@@ -111,6 +113,7 @@ const FormLogin = () => {
                                 <FormControl>
                                     <Input type="email" placeholder="email@example.com.br" {...field} />
                                 </FormControl>
+                                <FormMessage className="text-red-500"/>
                             </FormItem>
                         )}
                     />
@@ -123,6 +126,7 @@ const FormLogin = () => {
                                 <FormControl>
                                     <Input type="password" placeholder="123456" {...field} />
                                 </FormControl>
+                                <FormMessage className="text-red-500"/>
                             </FormItem>
                         )}
                     />
@@ -135,10 +139,11 @@ const FormLogin = () => {
                                 <FormControl>
                                     <Input type="password" placeholder="123456" {...field} />
                                 </FormControl>
+                                <FormMessage className="text-red-500"/>
                             </FormItem>
                         )}
                     />
-                    <Button className="w-full bg-[#0597F2] text-lg text-white">Registrar</Button>
+                    <Button className="w-full bg-[#0597F2] text-lg text-white" type="submit">Registrar</Button>
                 </form>
             </Form>
           </CardContent>

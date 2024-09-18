@@ -1,4 +1,4 @@
-'use server'
+import 'server-only'
 import { IUseradmin } from "@/interfaces/IUseradmin"
 import { getUsersAdmin, PostUseradmin } from "@/services/UserAdmin"
 

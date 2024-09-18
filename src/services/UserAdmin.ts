@@ -50,3 +50,17 @@ export const getUsersAdmin = async() => {
         console.log(error)
     }
 }
+
+export const userAdminLogin = async(email: string) => {
+    try{
+        const data = await prisma.usersAdmin.findUnique({
+            where: {
+                email
+            }
+        })
+
+        return data
+    }catch(error){
+        console.log(error)
+    }
+}

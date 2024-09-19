@@ -64,3 +64,18 @@ export const userAdminLogin = async(email: string) => {
         console.log(error)
     }
 }
+
+export const postAdminSession = async(createdAt: string, updatedAt: string, expiresAt: string, userId: number) => {
+    try{
+        await prisma.sessionsAdmin.create({
+            data: {
+                createdAt,
+                updatedAt,
+                expiresAt,
+                userAdminId: userId
+            }
+        })
+    }catch(error){
+        console.log(error)
+    }
+}

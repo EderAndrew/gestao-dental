@@ -19,6 +19,7 @@ import { z } from "zod"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "./ui/form"
 import { formSchemaLogin } from "@/schemas/formschemaLogin"
 import { formSchemaRegister } from "@/schemas/formSchemaRegister"
+import { signupAdmin } from "@/actions/auth"
 
 const FormLogin = () => {
     const formLogin = useForm<z.infer<typeof formSchemaLogin>>({
@@ -39,7 +40,11 @@ const FormLogin = () => {
     })
 
     const onLoginSubmit = async (values: z.infer<typeof formSchemaLogin>) => {
-        console.log(values)
+        try{
+            await signupAdmin(values)
+        }catch(error){
+            console.log(error)
+        }
     }
 
     const onRegisterSubmit = async (values: z.infer<typeof formSchemaLogin>) => {

@@ -1,7 +1,7 @@
-import 'server-only'
+'use server'
 import { compareCrypt } from "@/components/utils/cryptoHash"
 import { userAdminLogin } from "@/services/UserAdmin"
-import { createSession, deleteSession } from './session'
+import { createSession, deleteSession } from '../lib/session'
 import { redirect } from 'next/navigation'
 
 type LoginProps = {
@@ -11,12 +11,13 @@ type LoginProps = {
 
 export const signupAdmin = async(formData: LoginProps) => {
     try{
+        
         const data = await userAdminLogin(formData.email)
-
+        
         if(!data) return { message: "Email ou senha invalidos", status: 500, user: null }
 
-        const hashedPassword = await compareCrypt(formData.email, data.password)
-
+        const hashedPassword = await compareCrypt(formData.password, data.password)
+        
         if(!hashedPassword) return { message: "Email ou senha invalidos", status: 500, user: null }
 
         //TODO: Criar sessão
@@ -30,7 +31,7 @@ export const signupAdmin = async(formData: LoginProps) => {
 
         await createSession(payload)
         
-        redirect('/dashboard')
+        return { message: "Login efetuado com sucesso", status: 200, user: payload }
     }catch(error){
         console.log(error)
     }    

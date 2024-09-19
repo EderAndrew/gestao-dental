@@ -3,8 +3,7 @@ import { SignJWT, jwtVerify } from 'jose'
 import { cookies } from 'next/headers'
 import { postAdminSession } from '@/services/UserAdmin'
 
-const secretKey = process.env.SESSION_SECRET
-const encodedKey = new TextEncoder().encode(secretKey)
+const secret = new TextEncoder().encode(process.env.SESSION_SECRET)
 
 type Payload = {
     id: number,
@@ -19,18 +18,23 @@ export const encrypt = async(payload:Payload) => {
         .setProtectedHeader({ alg: 'HS256' })
         .setIssuedAt()
         .setExpirationTime('8h')
-        .sign(encodedKey)
+        .sign(secret)
 }
 
-export const decrypt = async(session: string | undefined = '') => {
+export const decrypt = async(cookie: string) => {
     try{
-        const { payload } = await jwtVerify(session, encodedKey, {
-            algorithms: ['HS256']
-        })
-
+        const { payload } = await jwtVerify(cookie, secret, { })
         return payload
     }catch(error){
-        console.log("Errro ao verificar a sessão.")
+        if(error instanceof Error){
+            if(error.message === '\"exp\" claim timestamp check failed'){
+                return {message: "Tempo de sessão expirou. Por favor, faca login novamente.", status: 400}
+                
+            }
+
+            console.log(`${error.message}`)
+        }
+        
     }
 }
 

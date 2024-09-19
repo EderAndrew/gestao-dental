@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from "next/server";
-
 import { cookies } from "next/headers";
 import { decrypt } from "./lib/session";
 
@@ -11,37 +10,34 @@ export const middleware = async (req: NextRequest) => {
     const isProtectedRoute = protectedRoutes.includes(path)
     const isPublicRoute = publicRoutes.includes(path)
     const regularSession = cookies().has('regular_session')
-    /* if(regularSession){
-        const cookie = cookies().get('regular_session')?.value
-        const session = await decryptSession(cookie)
-        const user = JSON.parse(session as unknown as string)
 
-        if(isProtectedRoute && !user?.id){
+    if(regularSession){
+        const cookie = cookies().get('regular_session')?.value as string
+        const session = await decrypt(cookie)
+
+        if(isProtectedRoute && !session?.id){
             return NextResponse.redirect(new URL('/login', req.url))
         }
 
-        if(isPublicRoute && user?.id && !req.nextUrl.pathname.startsWith('/patients')){
+        if(isPublicRoute && session?.id && !req.nextUrl.pathname.startsWith('/patients')){
             return NextResponse.redirect(new URL('/patients', req.url))
         }
 
         return NextResponse.next()
-    } */
+    }
 
-    const cookie = cookies().get('backoffice_session')?.value
-    console.log("Cookie: ", cookie)
+    const cookie = cookies().get('backoffice_session')?.value as string
     const session = await decrypt(cookie)
-    const user = JSON.parse(session as unknown as string)
-    console.log(user)
-/* 
-    if(isProtectedRoute && !user?.id){
+
+    if(isProtectedRoute && !session?.id){
         return NextResponse.redirect(new URL('/login', req.url))
     }
 
-    if(isPublicRoute && user?.id && !req.nextUrl.pathname.startsWith('/dashboard')){
+    if(isPublicRoute && session?.id && !req.nextUrl.pathname.startsWith('/dashboard')){
         return NextResponse.redirect(new URL('/dashboard', req.url))
     }
 
-    return NextResponse.next() */
+    return NextResponse.next()
     
 }
 

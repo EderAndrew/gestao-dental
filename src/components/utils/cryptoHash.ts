@@ -1,4 +1,4 @@
-import bcrypt from 'bcrypt'
+import bcrypt from 'bcryptjs'
 export const encrypt = async (pwd: string) => {
     const saltRounds = 10
     const salt = bcrypt.genSaltSync(saltRounds)

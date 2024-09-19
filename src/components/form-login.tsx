@@ -14,15 +14,18 @@ import { useForm } from "react-hook-form"
 import { z } from "zod"
 import { Form, FormControl, FormField, FormItem, FormMessage } from "./ui/form"
 import { formSchemaLogin } from "@/schemas/formschemaLogin"
-import { signupAdmin } from "@/actions/auth"
+import { signin } from "@/actions/auth"
 import Link from "next/link"
 import { cn } from "@/lib/utils"
 import IconUser from "../../public/assets/icons/IconUser"
 import IconLockPasswordLine from "../../public/assets/icons/IconLock"
+import { useState } from "react"
 
 const iconUser = <IconUser width={20} height={20} className="text-gray-500 ml-2"/>
 const iconPassword = <IconLockPasswordLine width={20} height={20} className="text-gray-500 ml-2"/>
 const FormLogin = () => {
+    const [isLoading, setIsLoading] = useState(false)
+
     const formLogin = useForm<z.infer<typeof formSchemaLogin>>({
         resolver: zodResolver(formSchemaLogin),
         defaultValues: {
@@ -33,8 +36,9 @@ const FormLogin = () => {
 
 
     const onLoginSubmit = async (values: z.infer<typeof formSchemaLogin>) => {
+        setIsLoading(true)
         try{
-            await signupAdmin(values)
+            await signin(values)
         }catch(error){
             console.log(error)
         }
@@ -89,7 +93,7 @@ const FormLogin = () => {
                 <div className={cn("w-full flex justify-end")}>
                     <Link href="/" className={cn("text-sm font-semibold text-orange-500 hover:underline hover:cursor-pointer hover:text-orange-600")}>Esqueci minha senha.</Link>
                 </div>
-                <Button className={cn("w-full bg-[#0597F2] text-lg text-white")} type="submit">Acessar</Button>
+                <Button className={cn("w-full bg-[#0597F2] text-lg text-white h-12")} type="submit">Acessar</Button>
             </form>
         </Form>
         

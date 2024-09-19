@@ -7,11 +7,7 @@ const secret = new TextEncoder().encode(process.env.SESSION_SECRET)
 
 type Payload = {
     id: number,
-    name: string,
-    email: string,
     role: string,
-    status: boolean,
-    officeId?: number
 }
 export const encrypt = async(payload:Payload) => {
     return new SignJWT(payload)
@@ -48,6 +44,8 @@ export const createSession = async(payload: Payload) => {
     }
 
     await cookieSession('backoffice_session', createdAt, session, expiresAt, payload.id)
+
+    return true
 }
 
 export const updateSession = async() => {

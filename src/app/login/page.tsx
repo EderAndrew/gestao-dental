@@ -17,7 +17,7 @@ const Login = () => {
         </div>
       </div>
       <div className={cn("flex flex-col items-center justify-center h-screen w-[50%]")}>
-        <div className={cn("w-[400px]")}>
+        <div className={cn("w-[500px]")}>
           <h1 className="text-5xl mb-10 font-bold">Bem vindo 👋</h1>
         </div>
         <FormLogin />

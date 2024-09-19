@@ -15,11 +15,11 @@ export const signin = async(formData: LoginProps) => {
         
         const data = await userLogin(formData.email) as IUser | IUseradmin
         
-        if(!data) return { message: "Email ou senha invalidos", status: 500, user: null }
+        if(!data) return { message: "Email ou senha invalidos", status: 404, user: null }
 
         const hashedPassword = await compareCrypt(formData.password, data.password as string)
         
-        if(!hashedPassword) return { message: "Email ou senha invalidos", status: 500, user: null }
+        if(!hashedPassword) return { message: "Email ou senha invalidos", status: 404, user: null }
 
         //TODO: Criar sessão
         const payload = {
@@ -30,7 +30,7 @@ export const signin = async(formData: LoginProps) => {
         await createSession(payload)
         
         
-        return { message: "Login efetuado com sucesso", status: 200, user: payload }
+        return { message: "Login efetuado com sucesso", status: 200, user: data }
     }catch(error){
         console.log(error)
     }    

@@ -1,4 +1,4 @@
-import FormNewAdmin from '@/components/form-new-admin'
+import FormNewAdmin from '@/components/forms/form-new-admin'
 import { cn } from '@/lib/utils'
 import React from 'react'
 

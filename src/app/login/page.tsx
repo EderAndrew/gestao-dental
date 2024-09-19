@@ -1,4 +1,4 @@
-import FormLogin from '@/components/form-login'
+import FormLogin from '@/components/forms/form-login'
 import { cn } from '@/lib/utils'
 import React from 'react'
 import toothIcon from '../../../public/assets/img/dente.png'

@@ -3,7 +3,7 @@ import { cookies } from "next/headers";
 import { decrypt } from "./lib/session";
 
 const protectedRoutes = ['/dashboard', '/patients']
-const publicRoutes = ['/login']
+const publicRoutes = ['/login', '/register']
 
 export const middleware = async (req: NextRequest) => {
     const path = req.nextUrl.pathname

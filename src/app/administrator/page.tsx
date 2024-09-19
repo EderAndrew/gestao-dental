@@ -1,4 +1,4 @@
-import FormAdminLogin from '@/components/form-admin-login'
+import FormAdminLogin from '@/components/forms/form-admin-login'
 import { cn } from '@/lib/utils'
 import React from 'react'
 

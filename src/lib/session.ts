@@ -45,7 +45,6 @@ export const createSession = async(payload: Payload) => {
 
     await cookieSession('backoffice_session', createdAt, session, expiresAt, payload.id)
 
-    return true
 }
 
 export const updateSession = async() => {

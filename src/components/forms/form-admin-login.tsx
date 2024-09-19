@@ -9,7 +9,7 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "./ui/form"
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "../ui/form"
 import { useForm } from "react-hook-form"
 import { formSchemaLogin } from "@/schemas/formschemaLogin"
 import { zodResolver } from "@hookform/resolvers/zod"

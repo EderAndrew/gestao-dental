@@ -1,6 +1,7 @@
 import { cn } from '@/lib/utils'
 import React from 'react'
 import Link from 'next/link'
+import ButtonHeaderAdminLogout from './button-header-admin-logout'
 
 const HeaderAdmin = () => {
   return (
@@ -16,8 +17,7 @@ const HeaderAdmin = () => {
             </li>
           </ul>
       </div>
-       
-        <Link href="/administrator" className={cn("border border-white text-white text-xs p-2 rounded")}>Logout</Link>
+       <ButtonHeaderAdminLogout />
     </header>
   )
 }

@@ -10,7 +10,7 @@ const Login = () => {
       <div className={cn("bg-girl-banner  w-[50%] bg-cover border-r-2 border-blue-light")}>
         <div className={cn("bg-gradient-to-t from-blue-light from-10% to-transparent p-8 flex flex-col justify-between h-screen")}>
           <div className={cn("flex items-center gap-4")}>
-            <Image src={toothIcon} alt="tooth icon" width={40} height={24}/>
+            <Image src={toothIcon} alt="tooth icon" className={cn("w-11")} priority={true} quality={100}/>
             <h1 className={cn("text-3xl title font-bold text-gray-100")}>Gestão Dental</h1>
           </div>
           <p className={cn("text-xs text-white")}>H&ADesenvolvimento &copy; 2024 - Todos os direitos reservados.</p>

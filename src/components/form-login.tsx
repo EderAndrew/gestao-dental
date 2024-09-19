@@ -4,23 +4,24 @@ import {
   Card,
   CardContent,
   CardDescription,
+  CardFooter,
   CardHeader,
+  CardTitle,
 } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
-import {
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
-} from "@/components/ui/tabs"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "./ui/form"
+import { Form, FormControl, FormField, FormItem, FormMessage } from "./ui/form"
 import { formSchemaLogin } from "@/schemas/formschemaLogin"
-import { formSchemaRegister } from "@/schemas/formSchemaRegister"
 import { signupAdmin } from "@/actions/auth"
+import Link from "next/link"
+import { cn } from "@/lib/utils"
+import IconUser from "../../public/assets/icons/IconUser"
+import IconLockPasswordLine from "../../public/assets/icons/IconLock"
 
+const iconUser = <IconUser width={20} height={20} className="text-gray-500 ml-2"/>
+const iconPassword = <IconLockPasswordLine width={20} height={20} className="text-gray-500 ml-2"/>
 const FormLogin = () => {
     const formLogin = useForm<z.infer<typeof formSchemaLogin>>({
         resolver: zodResolver(formSchemaLogin),
@@ -30,14 +31,6 @@ const FormLogin = () => {
         },
     })
 
-    const formRegister = useForm<z.infer<typeof formSchemaRegister>>({
-        resolver: zodResolver(formSchemaRegister),
-        defaultValues: {
-            email: "",
-            password: "",
-            repeatPassword: ""
-        },
-    })
 
     const onLoginSubmit = async (values: z.infer<typeof formSchemaLogin>) => {
         try{
@@ -47,114 +40,66 @@ const FormLogin = () => {
         }
     }
 
-    const onRegisterSubmit = async (values: z.infer<typeof formSchemaLogin>) => {
-        console.log(values)
-    }
 
   return (
-    <Tabs defaultValue="account" className="w-[400px]">
-      <TabsList className="grid w-full grid-cols-2 h-11">
-        <TabsTrigger value="account" className="data-[state=active]:bg-[#0597F2] data-[state=active]:text-white text-lg font-semibold text-slate-700">Login</TabsTrigger>
-        <TabsTrigger value="register" className="data-[state=active]:bg-[#0597F2] data-[state=active]:text-white text-lg font-semibold text-slate-700">Registrar</TabsTrigger>
-      </TabsList>
-      <TabsContent value="account">
-        <Card className="w-full shadow-sm">
-          <CardHeader>
+    <Card className="w-[500px] shadow-sm">
+        <CardHeader>
+            <CardTitle className="text-2xl font-semibold">Login</CardTitle>
             <CardDescription>
-                <span className="text-lg">Acesse o sistema Gestão Dental.</span>
+                <span className="text-base text-slate-700">Acesse o sistema Gestão Dental.</span>
             </CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-2">
-            <Form {...formLogin}>
-                <form onSubmit={formLogin.handleSubmit(onLoginSubmit)} className="space-y-4">
-                    <FormField
-                        control={formLogin.control}
-                        name="email"
-                        render={({field}) => (
-                            <FormItem>
-                                <FormLabel>Email</FormLabel>
-                                <FormControl>
-                                    <Input type="email" placeholder="email@example.com.br" {...field} />
-                                </FormControl>
-                                <FormMessage className="text-red-500"/>
-                            </FormItem>
-                        )}
-                    />
-                    <FormField
-                        control={formLogin.control}
-                        name="password"
-                        render={({field}) => (
-                            <FormItem>
-                                <FormLabel>Senha</FormLabel>
-                                <FormControl>
-                                    <Input type="password" placeholder="123456" {...field} />
-                                </FormControl>
-                                <FormMessage className="text-red-500"/>
-                            </FormItem>
-                        )}
-                    />
-                    <Button className="w-full bg-[#0597F2] text-lg text-white" type="submit">Acessar</Button>
-                </form>
-            </Form>
-          </CardContent>
-        </Card>
-      </TabsContent>
-      <TabsContent value="register">
-        <Card>
-          <CardHeader>
-            <CardDescription>
-                <span className="text-lg">Registre a senha para o seu primeiro acesso.</span>
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-2">
-          <Form {...formRegister}>
-                <form onSubmit={formRegister.handleSubmit(onRegisterSubmit)} className="space-y-4">
-                    <FormField
-                        control={formRegister.control}
-                        name="email"
-                        render={({field}) => (
-                            <FormItem>
-                                <FormLabel>Email</FormLabel>
-                                <FormControl>
-                                    <Input type="email" placeholder="email@example.com.br" {...field} />
-                                </FormControl>
-                                <FormMessage className="text-red-500"/>
-                            </FormItem>
-                        )}
-                    />
-                    <FormField
-                        control={formRegister.control}
-                        name="password"
-                        render={({field}) => (
-                            <FormItem>
-                                <FormLabel>Senha</FormLabel>
-                                <FormControl>
-                                    <Input type="password" placeholder="123456" {...field} />
-                                </FormControl>
-                                <FormMessage className="text-red-500"/>
-                            </FormItem>
-                        )}
-                    />
-                    <FormField
-                        control={formRegister.control}
-                        name="repeatPassword"
-                        render={({field}) => (
-                            <FormItem>
-                                <FormLabel>Repetir Senha</FormLabel>
-                                <FormControl>
-                                    <Input type="password" placeholder="123456" {...field} />
-                                </FormControl>
-                                <FormMessage className="text-red-500"/>
-                            </FormItem>
-                        )}
-                    />
-                    <Button className="w-full bg-[#0597F2] text-lg text-white" type="submit">Registrar</Button>
-                </form>
-            </Form>
-          </CardContent>
-        </Card>
-      </TabsContent>
-    </Tabs>
+        </CardHeader>
+        <CardContent className="space-y-2">
+        <Form {...formLogin}>
+            <form onSubmit={formLogin.handleSubmit(onLoginSubmit)} className="space-y-4">
+                <FormField
+                    control={formLogin.control}
+                    name="email"
+                    render={({field}) => (
+                        <FormItem>
+                            <FormControl>
+                                <Input
+                                    type="email"
+                                    placeholder="email@example.com.br"
+                                    icon={iconUser}
+                                    {...field}
+                                />
+                            </FormControl>
+                            <FormMessage className="text-red-500"/>
+                        </FormItem>
+                    )}
+                />
+                <FormField
+                    control={formLogin.control}
+                    name="password"
+                    render={({field}) => (
+                        <FormItem>
+                            <FormControl>
+                                <Input
+                                    type="password"
+                                    placeholder="Abc_@123"
+                                    icon={iconPassword}
+                                    {...field}
+                                />
+                            </FormControl>
+                            <FormMessage className="text-red-500"/>
+                        </FormItem>
+                    )}
+                />
+                <div className={cn("w-full flex justify-end")}>
+                    <Link href="/" className={cn("text-sm font-semibold text-orange-500 hover:underline hover:cursor-pointer hover:text-orange-600")}>Esqueci minha senha.</Link>
+                </div>
+                <Button className={cn("w-full bg-[#0597F2] text-lg text-white")} type="submit">Acessar</Button>
+            </form>
+        </Form>
+        
+        </CardContent>
+        <CardFooter>
+            <div className="w-full flex justify-center flex-col border-t-2 pt-3">
+                <span className={cn("text-sm font-semibold text-slate-500 m-auto")}>Caso ainda não tenha um cadastro, cadastre seu consultório <Link href="/" className={cn("text-orange-500 italic hover:underline hover:cursor-pointer")}>aqui</Link></span>
+            </div>
+        </CardFooter>
+    </Card>
   )
 }
 

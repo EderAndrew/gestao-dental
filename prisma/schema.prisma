@@ -23,7 +23,7 @@ model addresses {
   updatedAt    DateTime
   offices      offices?  @relation(fields: [officeId], references: [identity])
   patients     patients? @relation(fields: [patientId], references: [identity])
-  users        users     @relation(fields: [userId], references: [id])
+  users        users?    @relation(fields: [userId], references: [id])
 }
 
 model anamneses {

@@ -1,0 +1,18 @@
+export interface IOfficeSchema {
+    cnpj: string,
+    corporate:string,
+    name: string,
+    tel: string,
+    identity: string,
+    cep: string,
+    street: string,
+    complement: string,
+    number:string,
+    neighborhood: string,
+    city: string,
+    state: string,
+    userName: string,
+    email: string,
+    password: string,
+    repeatPassword: string,
+}

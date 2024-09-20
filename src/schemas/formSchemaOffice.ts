@@ -21,5 +21,25 @@ export const formSchemaOffice = z.object({
     neighborhood: z.string().trim(),
     city: z.string().trim(),
     state: z.string().trim(),
+    userName: z.string().min(2, {
+        message: "Nome de Usuário deve ter no mínimo 2 letras.",
+    }).trim(),
+    email: z.string().email({message: "Email invalido"}).trim(),
+    password: z.string()
+        .min(8, {message: "Senha deve ter no mínimo 6 digitos."})
+        .regex(/[a-zA-Z]/, { message: 'Senha deve conter pelo menos uma letra.' })
+        .regex(/[0-9]/, { message: 'Senha deve conter pelo menos um número.' })
+        .regex(/[^a-zA-Z0-9]/, {
+        message: 'Senha deve conter pelo menos um caracter especial.',
+        })
+        .trim(),
+    repeatPassword: z.string()
+        .min(8, {message: "Senha deve ter no mínimo 6 digitos."})
+        .regex(/[a-zA-Z]/, { message: 'Senha deve conter pelo menos uma letra.' })
+        .regex(/[0-9]/, { message: 'Senha deve conter pelo menos um número.' })
+        .regex(/[^a-zA-Z0-9]/, {
+        message: 'Senha deve conter pelo menos um caracter especial.',
+        })
+        .trim(),
 
 })

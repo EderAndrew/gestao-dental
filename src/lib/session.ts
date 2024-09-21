@@ -1,7 +1,8 @@
 import 'server-only'
 import { SignJWT, jwtVerify } from 'jose'
 import { cookies } from 'next/headers'
-import { postAdminSession } from '@/services/UserAdmin'
+import { postSession } from '@/services/UserAdmin'
+
 
 const secret = new TextEncoder().encode(process.env.SESSION_SECRET)
 
@@ -39,11 +40,8 @@ export const createSession = async(payload: Payload) => {
     const createdAt = new Date().toISOString()
     const session = await encrypt(payload)
     
-    if(payload.role === 'ADMIN' || payload.role === 'USER') {
-        await cookieSession('regular_session', createdAt, session, expiresAt, payload.id)
-    }
-
-    await cookieSession('backoffice_session', createdAt, session, expiresAt, payload.id)
+    const name_session = payload.role === 'ADMIN' || payload.role === 'USER' ? 'regular_session' : 'backoffice_session'
+    await cookieSession(name_session, createdAt, session, expiresAt, payload.id, payload.role)
 
 }
 
@@ -75,7 +73,7 @@ export const deleteSession = async() => {
     cookies().getAll().forEach(cookie => cookies().delete(cookie.name))
 }
 
-export const cookieSession = async(name_session: string, createdAt: string,  session: string, expiresAt: Date, userId: number) => {
+export const cookieSession = async(name_session: string, createdAt: string,  session: string, expiresAt: Date, userId: number, role: string) => {
     cookies().set(name_session, session, {
         httpOnly: true,
         secure: true,
@@ -84,10 +82,5 @@ export const cookieSession = async(name_session: string, createdAt: string,  ses
         path: '/'
     })
 
-    if(name_session === 'regular_session') {
-        //TODO: CRIAR SESSÃO NO USER NO BANCO
-        return
-    }
-
-    await postAdminSession(createdAt, createdAt, expiresAt.toISOString(),userId)
+    await postSession(createdAt, createdAt, expiresAt.toISOString(),userId, role)
 }

@@ -4,7 +4,7 @@ export const encrypt = async (pwd: string) => {
     const salt = bcrypt.genSaltSync(saltRounds)
     const hash = bcrypt.hashSync(pwd, salt)
     
-    return hash
+    return hash.replace("/", "")
 }
 
 export const compareCrypt = async(pwd: string, hash: string) => {

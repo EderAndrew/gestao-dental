@@ -22,7 +22,7 @@ import IconLockPasswordLine from "../../../public/assets/icons/IconLock"
 import { useState } from "react"
 import { useToast } from "@/hooks/use-toast"
 import { useRouter } from "next/navigation"
-import { IUser, IUseradmin } from "@/interfaces/IUseradmin"
+import { IUser } from "@/interfaces/IUseradmin"
 import { createSessionStorage } from "@/utils/createSessionStorage"
 
 const iconUser = <IconUser width={20} height={20} className="text-gray-500 ml-2"/>
@@ -59,7 +59,7 @@ const FormLogin = () => {
 
             if(data?.status === 200 && data?.user?.role === "ADMIN" || data?.user?.role === "USER"){
                 const user = data.user as IUser
-                await createSessionStorage(data.user as IUser, `/offices/${user.officeId}/queries`, router)
+                await createSessionStorage(data.user as IUser, `/offices/${user.officeId}/home`, router)
                 toast({
                     description: `Login efetuado com sucesso.`,
                     variant: 'success'
@@ -67,7 +67,7 @@ const FormLogin = () => {
                 return
             }
 
-            const user = data?.user as IUseradmin
+            const user = data?.user as IUser
             await createSessionStorage(user, `/dashboard/${user.id}/home`, router)
             toast({
                 description: `Login efetuado com sucesso.`,

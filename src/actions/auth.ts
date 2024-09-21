@@ -3,7 +3,7 @@ import { compareCrypt } from "@/components/utils/cryptoHash"
 import { userLogin } from "@/services/UserAdmin"
 import { createSession, deleteSession } from '../lib/session'
 import { redirect } from 'next/navigation'
-import { IUser, IUseradmin } from "@/interfaces/IUseradmin"
+import { IUser } from "@/interfaces/IUseradmin"
 
 type LoginProps = {
     email: string
@@ -13,7 +13,7 @@ type LoginProps = {
 export const signin = async(formData: LoginProps) => {
     try{
         
-        const data = await userLogin(formData.email) as IUser | IUseradmin
+        const data = await userLogin(formData.email) as IUser
         
         if(!data) return { message: "Email ou senha invalidos", status: 404, user: null }
 
@@ -24,7 +24,8 @@ export const signin = async(formData: LoginProps) => {
         //TODO: Criar sessão
         const payload = {
             id: data.id as number,
-            role: data.role as string
+            role: data.role as string,
+            officeId: data.officeId ? data.officeId as string : null
         }
 
         await createSession(payload)

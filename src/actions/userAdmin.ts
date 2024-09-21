@@ -1,9 +1,10 @@
 'user server'
-import { IUseradmin } from "@/interfaces/IUseradmin"
+
+import { IUser } from "@/interfaces/IUseradmin"
 import { verifySession } from "@/lib/dal"
 import { getUsersAdmin, PostUseradmin } from "@/services/UserAdmin"
 
-export const createUserAdmin = async(data: IUseradmin) => {
+export const createUserAdmin = async(data: IUser) => {
     const session = await verifySession()
     if(!session) return null
     try{

@@ -1,12 +1,12 @@
 
 import { encrypt } from "@/components/utils/cryptoHash";
-import { IUseradmin } from "@/interfaces/IUseradmin";
+import { IUser } from "@/interfaces/IUseradmin";
 import { PrismaClient } from "@prisma/client";
 
 
 const prisma = new PrismaClient()
 
-export const PostUseradmin = async(data: IUseradmin) => {
+export const PostUseradmin = async(data: IUser) => {
     try{
         const haveUser = await prisma.usersAdmin.findUnique({
             where: {
@@ -18,7 +18,7 @@ export const PostUseradmin = async(data: IUseradmin) => {
             return { message: "Usuário ja existe no banco de dados", status: 200 }
         }
 
-        const hash = await encrypt(data.password)
+        const hash = await encrypt(data.password!)
 
         const user = await prisma.usersAdmin.create({
             data: {
@@ -75,8 +75,20 @@ export const userLogin = async(email: string) => {
     }
 }
 
-export const postAdminSession = async(createdAt: string, updatedAt: string, expiresAt: string, userId: number) => {
+export const postSession = async(createdAt: string, updatedAt: string, expiresAt: string, userId: number, role: string) => {
     try{
+        if(role === "ADMIN" || role === "USER") {
+            await prisma.sessions.create({
+                data: {
+                    createdAt,
+                    updatedAt,
+                    expiresAt,
+                    userId: userId
+                }
+            })
+            return
+        }
+        
         await prisma.sessionsAdmin.create({
             data: {
                 createdAt,

@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { IUser, IUseradmin } from "@/interfaces/IUseradmin"
+import { IUser } from "@/interfaces/IUseradmin"
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime"
 
-export const createSessionStorage = async(data: IUser | IUseradmin, url: string, router: AppRouterInstance) => {
+export const createSessionStorage = async(data: IUser, url: string, router: AppRouterInstance) => {
     
     let userInfo = {}
     if("officeId" in data){
@@ -11,7 +11,7 @@ export const createSessionStorage = async(data: IUser | IUseradmin, url: string,
             id: data.id as number,
             name: data.name as string,
             email: data.email as string,
-            officeId: data.officeId as number,
+            officeId: data.officeId as string,
             role: data.role as string
         }
         sessionStorage.setItem("regular_user", JSON.stringify(userInfo))

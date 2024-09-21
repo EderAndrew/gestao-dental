@@ -25,11 +25,17 @@ import { getAddressByCep } from "@/actions/cep-api"
 import { ICep } from "@/interfaces/ICep"
 import { useState } from "react"
 import Link from "next/link"
-
-
+import bcrypt from 'bcryptjs'
+import { createOffice } from "@/actions/office"
+import { IOfficeSchema } from "@/interfaces/IOfficeSchema"
+import { useToast } from "@/hooks/use-toast"
+import { useRouter } from "next/navigation"
 
 export const FormOffice = () => {
     const [address, setAddress] = useState<ICep>()
+    const [isLoading, setIsLoading] = useState(false)
+    const { toast } = useToast()
+    const router = useRouter()
 
     const form = useForm<z.infer<typeof formSchemaOffice>>({
         resolver: zodResolver(formSchemaOffice),
@@ -58,8 +64,53 @@ export const FormOffice = () => {
         setAddress(infoAddress)
     }
 
-    function onSubmit(values: z.infer<typeof formSchemaOffice>) {
-        console.log(values)
+    const onSubmit = async(values: z.infer<typeof formSchemaOffice>) => {
+        setIsLoading(true)
+        const dateIdentity = new Date().toUTCString()
+        const identity = bcrypt.hashSync(`${values.cnpj}+${dateIdentity}`, 10)
+        
+        const data = {
+            ...values,
+            street: address?.logradouro,
+            complement: address?.complemento,
+            neighborhood: address?.bairro,
+            city: address?.localidade,
+            state: address?.uf,
+            identity
+        } as IOfficeSchema
+
+        try{
+            const office = await createOffice(data)
+            
+            if(office?.status === 400 || office?.status === 500){
+                toast({
+                    description: `${office?.message}`,
+                    style: {
+                        color: "white",
+                        backgroundColor: 'red'
+                    }
+                })
+                setIsLoading(false)
+                return
+            }
+
+            toast({
+                description: `${office?.message}`,
+                style: {
+                    color: "white",
+                    backgroundColor: 'green'
+                }
+            })
+
+            router.push('/login')
+            
+        }catch(error){
+            console.log(error)
+        }
+        
+
+        
+        
     }
 
     return(
@@ -223,7 +274,7 @@ export const FormOffice = () => {
                                         <FormItem className="w-32">
                                         <FormLabel>Estado</FormLabel>
                                         <FormControl>
-                                            <Input placeholder="111" value={address ? address.uf : ""}/>
+                                            <Input placeholder="111" defaultValue={address ? address.uf : ""}/>
                                         </FormControl>
                                         <FormMessage className="text-red-500"/>
                                         </FormItem>
@@ -292,7 +343,7 @@ export const FormOffice = () => {
                             />
                         </div>
                     </div>
-                    <Button type="submit" className="w-full bg-green-500 text-white h-12">CADASTRAR</Button>
+                    <Button type="submit" className="w-full bg-green-500 text-white h-12" disabled={isLoading}>{isLoading ? "CADASTRANDO..." : "CADASTRAR"}</Button>
                 </form>
             </Form>
             </CardContent>

@@ -11,7 +11,7 @@ CREATE TABLE "addresses" (
     "city" TEXT NOT NULL,
     "state" TEXT NOT NULL,
     "cep" TEXT NOT NULL,
-    "userId" INTEGER NOT NULL,
+    "userId" INTEGER,
     "officeId" TEXT,
     "patientId" TEXT,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -104,7 +104,7 @@ CREATE TABLE "patients" (
     "role" "Role" NOT NULL DEFAULT 'PATIENT',
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
-    "officeId" INTEGER NOT NULL,
+    "officeId" TEXT NOT NULL,
 
     CONSTRAINT "patients_pkey" PRIMARY KEY ("id")
 );
@@ -156,7 +156,7 @@ CREATE TABLE "users" (
     "tel" TEXT NOT NULL,
     "status" BOOLEAN NOT NULL DEFAULT true,
     "role" "Role" NOT NULL DEFAULT 'USER',
-    "officeId" INTEGER NOT NULL,
+    "officeId" TEXT NOT NULL,
     "firstAccess" BOOLEAN NOT NULL DEFAULT true,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
@@ -189,6 +189,9 @@ CREATE TABLE "officesPayment" (
 CREATE UNIQUE INDEX "offices_identity_key" ON "offices"("identity");
 
 -- CreateIndex
+CREATE UNIQUE INDEX "offices_cnpj_key" ON "offices"("cnpj");
+
+-- CreateIndex
 CREATE UNIQUE INDEX "patients_identity_key" ON "patients"("identity");
 
 -- CreateIndex
@@ -204,7 +207,7 @@ ALTER TABLE "addresses" ADD CONSTRAINT "addresses_officeId_fkey" FOREIGN KEY ("o
 ALTER TABLE "addresses" ADD CONSTRAINT "addresses_patientId_fkey" FOREIGN KEY ("patientId") REFERENCES "patients"("identity") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "addresses" ADD CONSTRAINT "addresses_userId_fkey" FOREIGN KEY ("userId") REFERENCES "users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "addresses" ADD CONSTRAINT "addresses_userId_fkey" FOREIGN KEY ("userId") REFERENCES "users"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "anamneses" ADD CONSTRAINT "anamneses_patientId_fkey" FOREIGN KEY ("patientId") REFERENCES "patients"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
@@ -213,7 +216,7 @@ ALTER TABLE "anamneses" ADD CONSTRAINT "anamneses_patientId_fkey" FOREIGN KEY ("
 ALTER TABLE "budgets" ADD CONSTRAINT "budgets_patientId_fkey" FOREIGN KEY ("patientId") REFERENCES "patients"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "patients" ADD CONSTRAINT "patients_officeId_fkey" FOREIGN KEY ("officeId") REFERENCES "offices"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "patients" ADD CONSTRAINT "patients_officeId_fkey" FOREIGN KEY ("officeId") REFERENCES "offices"("identity") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "sessions" ADD CONSTRAINT "sessions_userId_fkey" FOREIGN KEY ("userId") REFERENCES "users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
@@ -225,4 +228,4 @@ ALTER TABLE "sessionsAdmin" ADD CONSTRAINT "sessionsAdmin_userAdminId_fkey" FORE
 ALTER TABLE "teeths" ADD CONSTRAINT "teeths_budgetId_fkey" FOREIGN KEY ("budgetId") REFERENCES "budgets"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "users" ADD CONSTRAINT "users_officeId_fkey" FOREIGN KEY ("officeId") REFERENCES "offices"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "users" ADD CONSTRAINT "users_officeId_fkey" FOREIGN KEY ("officeId") REFERENCES "offices"("identity") ON DELETE RESTRICT ON UPDATE CASCADE;

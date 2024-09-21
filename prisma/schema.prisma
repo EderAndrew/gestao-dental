@@ -16,7 +16,7 @@ model addresses {
   city         String
   state        String
   cep          String
-  userId       Int
+  userId       Int?
   officeId     String?
   patientId    String?
   createdAt    DateTime  @default(now())
@@ -73,7 +73,7 @@ model offices {
   corporate String
   name      String
   tel       String
-  cnpj      String
+  cnpj      String      @unique
   status    Boolean     @default(true)
   createdAt DateTime    @default(now())
   updatedAt DateTime
@@ -106,11 +106,11 @@ model patients {
   role                   Role        @default(PATIENT)
   createdAt              DateTime    @default(now())
   updatedAt              DateTime
-  officeId               Int
+  officeId               String
   addresses              addresses[]
   anamneses              anamneses[]
   budgets                budgets[]
-  offices                offices     @relation(fields: [officeId], references: [id], onDelete: Cascade)
+  offices                offices     @relation(fields: [officeId], references: [identity], onDelete: Cascade)
 }
 
 model sessions {
@@ -153,13 +153,13 @@ model users {
   tel         String
   status      Boolean     @default(true)
   role        Role        @default(USER)
-  officeId    Int
+  officeId    String
   firstAccess Boolean     @default(true)
   createdAt   DateTime    @default(now())
   updatedAt   DateTime
   addresses   addresses[]
   sessions    sessions[]
-  offices     offices     @relation(fields: [officeId], references: [id])
+  offices     offices     @relation(fields: [officeId], references: [identity])
 }
 
 model usersAdmin {

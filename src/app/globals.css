@@ -39,9 +39,6 @@
 }
 
 @layer utilities {
-  *{
-    @apply text-slate-700
-  }
   .h1-semi-bold {
     @apply text-2xl font-semibold;
   }

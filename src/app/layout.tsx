@@ -15,8 +15,8 @@ const merri = Merriweather({
 });
 
 export const metadata: Metadata = {
-  title: "Gestão Dental",
-  description: "Sistema para agendamento de consultas dentários.",
+  title: "AgendaDental",
+  description: "Gestão de Agendamento confiável.",
 };
 
 export default function RootLayout({
@@ -28,7 +28,6 @@ export default function RootLayout({
     <html lang="pt-br">
       <body
         className={`${roboto.variable} ${merri.variable} antialiased`}
-        suppressHydrationWarning={true}
       >
         {children}
         <Toaster />

@@ -1,18 +1,23 @@
-// icon:logout | Material Design Icons https://materialdesignicons.com/ | Austin Andrews
+// icon:log-out | Lucide https://lucide.dev/ | Lucide
 import * as React from "react";
 
-function IconLogout(props: React.SVGProps<SVGSVGElement>) {
+function IconLogOut(props: React.SVGProps<SVGSVGElement>) {
   return (
     <svg
+      fill="none"
+      stroke="currentColor"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth={2}
       viewBox="0 0 24 24"
-      fill="currentColor"
       height="1em"
       width="1em"
       {...props}
     >
-      <path d="M16 17v-3H9v-4h7V7l5 5-5 5M14 2a2 2 0 012 2v2h-2V4H5v16h9v-2h2v2a2 2 0 01-2 2H5a2 2 0 01-2-2V4a2 2 0 012-2h9z" />
+      <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9" />
     </svg>
   );
 }
 
-export default IconLogout;
+export default IconLogOut;
+
